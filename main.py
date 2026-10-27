@@ -3,10 +3,8 @@ from typing import List
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-# 1. Initialize OpenAI Client
-client = OpenAI(api_key="your-api-key-here")
+client = OpenAI(api_key="YOUR_REAL_API_KEY_HERE")
 
-# 2. Define structured schemas for extraction
 class LineItem(BaseModel):
     item_name: str = Field(description="Name of the product or service")
     quantity: int = Field(description="Quantity purchased")
@@ -20,7 +18,6 @@ class InvoiceData(BaseModel):
     tax_amount: float = Field(description="Total tax amount applied")
     grand_total: float = Field(description="Final total including tax")
 
-# 3. Setup Local SQLite Database
 def init_db():
     conn = sqlite3.connect("invoices.db")
     cursor = conn.cursor()
@@ -35,7 +32,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-# 4. Core extraction function using LLM Structured Outputs
 def extract_invoice_data(raw_text: str) -> InvoiceData:
     completion = client.beta.chat.completions.parse(
         model="gpt-4o-mini",
@@ -47,7 +43,6 @@ def extract_invoice_data(raw_text: str) -> InvoiceData:
     )
     return completion.choices.message.parsed
 
-# 5. Save structured data to SQL
 def save_to_db(data: InvoiceData):
     conn = sqlite3.connect("invoices.db")
     cursor = conn.cursor()
