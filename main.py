@@ -3,7 +3,7 @@ from typing import List
 from openai import OpenAI
 from pydantic import BaseModel, Field
 
-client = OpenAI(api_key="sk-proj-Ti5ypd2mDp6KdQx6Ebglo-V5nXpKz...")
+client = OpenAI(api_key="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")
 
 class LineItem(BaseModel):
     item_name: str = Field(description="Name of the product or service")
