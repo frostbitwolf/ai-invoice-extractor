@@ -1,9 +1,13 @@
+import os
 import sqlite3
 from typing import List
 from openai import OpenAI
+from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
-client = OpenAI(api_key="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")
+load_dotenv()
+
+client = OpenAI()
 
 class LineItem(BaseModel):
     item_name: str = Field(description="Name of the product or service")
@@ -69,3 +73,4 @@ if __name__ == "__main__":
     print("\n--- Extracted Structured JSON ---")
     print(extracted_result.model_dump_json(indent=2))
     save_to_db(extracted_result)
+
